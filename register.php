@@ -10,13 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $confirm_password) {
         $message = "Passwords do not match!";
     } else {
-        try{
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         $sql = "INSERT INTO appusers (username, password) VALUES (?, ?)";
         $stmt = $db->prepare($sql);
 
-        }catch(PDOException $e){
         if ($stmt->execute([$username, $hashedPassword])) {
             $message = "Registration successful! <a href='login.php'>Login here</a>";
         } else {
@@ -24,8 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

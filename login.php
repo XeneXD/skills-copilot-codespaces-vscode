@@ -6,7 +6,7 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = htmlspecialchars($_POST['username']);
     $password = $_POST['password'];
-try{
+
     $sql = "SELECT * FROM appusers WHERE username = ?";
     $stmt = $db->prepare($sql);
     $stmt->execute([$username]);
@@ -19,9 +19,6 @@ try{
     } else {
         $message = "Invalid username or password!";
     }
-} catch(PDOException $e){
-    $message = "Database error: " .$e->getMessage();
-}
 }
 ?>
 <!DOCTYPE html>
@@ -30,11 +27,9 @@ try{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel = "stylesheet" href="login.css">
 </head>
 <body>
-    <div class = "container">
-    <h2>User Login</h2>
+    <h2>Login</h2>
     <p><?php echo $message; ?></p>
     <form method="POST">
         <label for="username">Username:</label>
@@ -43,11 +38,8 @@ try{
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <div class = "button-group">
-        <button type="submit" class = "login">Login</button>
-        <button type="reset" class = "clear">Clear</button>
-    </div>
+        <button type="submit">Login</button>
     </form>
-    </div>
+    <a href="register.php">Don't have an account? Register here.</a>
 </body>
 </html>
